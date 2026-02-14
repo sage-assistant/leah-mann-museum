@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Metropolitan Museum of Rock: The Leah Mann Retrospective</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600&family=Manrope:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0b14;
+      --surface: #0f1019;
+      --surface-2: #151621;
+      --border: rgba(212,168,83,0.12);
+      --text: #f5f0e6;
+      --text-dim: #a09882;
+      --gold: #D4A853;
+      --gold-soft: rgba(212,168,83,0.1);
+      --gold-glow: rgba(212,168,83,0.3);
+      --rose: #c9a0a0;
+      --rose-soft: rgba(201,160,160,0.1);
+      --cream: #f5f0e6;
+      --navy: #0a0b14;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Manrope', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Splash / Admission */
+    .splash {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      transition: opacity 0.6s, visibility 0.6s;
+    }
+    .splash.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+    .ticket {
+      max-width: 520px;
+      width: 100%;
+      background: var(--surface-2);
+      border: 2px solid var(--gold);
+      border-radius: 4px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 0 80px rgba(212,168,83,0.08);
+    }
+    .ticket::before, .ticket::after {
+      content: '';
+      position: absolute;
+      width: 24px; height: 24px;
+      background: var(--bg);
+      border-radius: 50%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .ticket::before { left: -13px; }
+    .ticket::after { right: -13px; }
+
+    .ticket-header {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px dashed var(--border);
+    }
+    .ticket h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+      color: var(--gold);
+    }
+    .ticket h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1rem, 3vw, 1.4rem);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--cream);
+      margin-bottom: 1.5rem;
+    }
+    .ticket-warning {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+    .ticket-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px dashed var(--border);
+    }
+    .admit-btn {
+      padding: 1rem 3rem;
+      background: var(--gold);
+      border: none;
+      border-radius: 2px;
+      color: var(--bg);
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .admit-btn:hover { transform: translateY(-2px); box-shadow: 0 15px 40px var(--gold-glow); }
+    .ticket-serial {
+      margin-top: 1.5rem;
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      opacity: 0.4;
+      font-family: monospace;
+    }
+
+    /* Gradient bg */
+    .gradient-bg {
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(212,168,83,0.04) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 60% at 80% 80%, rgba(201,160,160,0.02) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.015;
+      pointer-events: none;
+      z-index: 9997;
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 4rem); position: relative; z-index: 1; }
+    .display { font-family: 'Playfair Display', serif; font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; }
+    .label { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); }
+
+    /* VIP section (hidden) */
+    .vip-section { display: none; }
+    .vip-section.unlocked { display: block; animation: unlockReveal 0.8s ease-out; }
+    @keyframes unlockReveal { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+    }
+    .hero-glow {
+      position: absolute; top: 25%; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, var(--gold-glow) 0%, transparent 70%);
+      filter: blur(100px); opacity: 0.15;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      padding: 0.6rem 1.5rem;
+      background: var(--gold-soft);
+      border: 1px solid rgba(212,168,83,0.25);
+      border-radius: 2px;
+      font-size: 0.6rem; font-weight: 700; color: var(--gold);
+      letter-spacing: 0.25em; text-transform: uppercase;
+      margin-bottom: 2.5rem;
+      opacity: 0; animation: fadeUp 1s ease-out 0.1s forwards;
+    }
+    .hero-title {
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      max-width: 900px;
+      margin-bottom: 1rem;
+      color: var(--gold);
+      opacity: 0; animation: fadeUp 1s ease-out 0.3s forwards;
+      cursor: pointer;
+      user-select: none;
+    }
+    .hero-subtitle {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--text-dim);
+      max-width: 650px;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+      opacity: 0; animation: fadeUp 1s ease-out 0.5s forwards;
+    }
+    .hero-sub2 {
+      font-size: 0.85rem;
+      color: var(--rose);
+      opacity: 0; animation: fadeUp 1s ease-out 0.7s forwards;
+    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Sections */
+    section { padding: clamp(5rem, 12vw, 8rem) 0; }
+    .section-header { text-align: center; max-width: 750px; margin: 0 auto 4rem; }
+    .section-title { font-size: clamp(1.8rem, 4.5vw, 3rem); margin-top: 0.75rem; margin-bottom: 1.25rem; color: var(--cream); }
+    .section-desc { font-size: 1rem; color: var(--text-dim); line-height: 1.8; }
+
+    /* Museum panel styling */
+    .museum-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2.5rem;
+      position: relative;
+    }
+    .museum-panel::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 2rem; right: 2rem;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    /* Exhibition Overview / Stats */
+    .stats-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .curator-note {
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      padding: 2rem 2.5rem;
+      background: var(--bg);
+      border-left: 3px solid var(--gold);
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: var(--text-dim);
+    }
+    .curator-attrib {
+      display: block;
+      margin-top: 1rem;
+      font-style: normal;
+      font-size: 0.75rem;
+      color: var(--gold);
+      font-family: 'Manrope', sans-serif;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .stat-card {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .stat-label {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      line-height: 1.4;
+    }
+
+    /* Origin Story / Timeline */
+    .timeline {
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+      padding-left: 3rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(180deg, var(--gold), var(--rose), var(--gold));
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3rem;
+      padding-left: 1.5rem;
+    }
+    .timeline-item::before {
+      content: '◆';
+      position: absolute;
+      left: -3.65rem;
+      top: 0.2rem;
+      color: var(--gold);
+      font-size: 0.7rem;
+    }
+    .timeline-year {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .timeline-text {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+    }
+
+    /* Collection Gallery */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+    .gallery-piece {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .gallery-piece:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(212,168,83,0.08); }
+    .piece-visual {
+      height: 200px;
+      background: linear-gradient(135deg, var(--surface-2), var(--bg));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: var(--gold);
+      position: relative;
+      overflow: hidden;
+    }
+    .piece-visual::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 60%, var(--surface));
+    }
+    .piece-info {
+      padding: 1.5rem;
+    }
+    .piece-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      margin-bottom: 0.25rem;
+    }
+    .piece-medium {
+      font-size: 0.7rem;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.75rem;
+    }
+    .piece-desc {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+    .piece-value {
+      margin-top: 0.75rem;
+      font-size: 0.7rem;
+      color: var(--rose);
+      font-style: italic;
+    }
+
+    /* By Appointment Section */
+    .appointment-box {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 3rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .appointment-box h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--cream);
+    }
+    .form-field { margin-bottom: 1.5rem; }
+    .form-field label {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 0.5rem;
+    }
+    .form-field input, .form-field select, .form-field textarea {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.9rem;
+    }
+    .form-field textarea { resize: vertical; min-height: 80px; }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { outline: none; border-color: var(--gold); }
+    .submit-btn {
+      width: 100%;
+      padding: 1rem;
+      background: var(--gold);
+      border: none;
+      border-radius: 2px;
+      color: var(--bg);
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .submit-btn:hover { transform: translateY(-2px); }
+    .progress-container {
+      display: none;
+      margin-top: 2rem;
+      text-align: center;
+    }
+    .progress-container.visible { display: block; animation: fadeUp 0.5s ease-out; }
+    .progress-bar-bg {
+      width: 100%;
+      height: 6px;
+      background: var(--bg);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--gold), var(--rose));
+      border-radius: 3px;
+      transition: width 0.3s;
+    }
+    .progress-text {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+    .waitlist-result {
+      display: none;
+      margin-top: 1.5rem;
+      padding: 1.5rem;
+      background: var(--bg);
+      border: 1px solid var(--gold);
+      border-radius: 4px;
+      text-align: center;
+    }
+    .waitlist-result.visible { display: block; animation: fadeUp 0.5s ease-out; }
+    .waitlist-result h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .waitlist-result p {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+    .waitlist-position {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--rose);
+      margin: 0.5rem 0;
+    }
+
+    /* City Rivalry */
+    .rivalry-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 2rem;
+      align-items: start;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .city-card {
+      padding: 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      text-align: center;
+    }
+    .city-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .city-stat {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 0.25rem;
+    }
+    .city-stat-label {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+    }
+    .city-quote {
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--text-dim);
+      line-height: 1.7;
+      padding: 1rem;
+      background: var(--bg);
+      border-radius: 4px;
+      margin-bottom: 0.5rem;
+    }
+    .city-quote-attrib {
+      font-size: 0.7rem;
+      color: var(--rose);
+    }
+    .rivalry-vs {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      padding-top: 4rem;
+      text-align: center;
+    }
+
+    /* Testimonials */
+    .experts-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    .expert-card {
+      padding: 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      position: relative;
+    }
+    .expert-card::before {
+      content: '\201C';
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      color: var(--gold);
+      opacity: 0.15;
+      position: absolute;
+      top: 0.5rem; left: 1.5rem;
+      line-height: 1;
+    }
+    .expert-quote {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      font-style: italic;
+      color: var(--text);
+      position: relative; z-index: 1;
+      margin-bottom: 1.5rem;
+    }
+    .expert-name { font-size: 0.85rem; font-weight: 600; color: var(--cream); }
+    .expert-title { font-size: 0.7rem; color: var(--text-dim); }
+
+    /* Gift Shop */
+    .shop-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .shop-item {
+      padding: 2rem 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    .shop-item:hover { transform: translateY(-4px); }
+    .shop-icon {
+      font-size: 2rem;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .shop-item h5 {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+      color: var(--cream);
+    }
+    .shop-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .shop-desc {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+    .shop-btn {
+      margin-top: 1rem;
+      padding: 0.5rem 1.5rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text-dim);
+      font-family: inherit;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .shop-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* Guest Book */
+    .guestbook-box {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .guestbook-input-area {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .guestbook-input-area input {
+      flex: 1;
+      padding: 0.85rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.9rem;
+    }
+    .guestbook-input-area input:focus { outline: none; border-color: var(--gold); }
+    .guestbook-input-area button {
+      padding: 0.85rem 2rem;
+      background: var(--gold);
+      border: none;
+      border-radius: 2px;
+      color: var(--bg);
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .guestbook-entries {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .guestbook-entry {
+      padding: 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      animation: fadeUp 0.5s ease-out;
+    }
+    .guestbook-entry p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--cream);
+      line-height: 1.7;
+      margin-bottom: 0.5rem;
+    }
+    .guestbook-entry span {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+    }
+
+    /* Diamond Authentication */
+    .auth-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .auth-box {
+      max-width: 500px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .auth-input-area {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .auth-input-area input {
+      flex: 1;
+      padding: 0.85rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+    .auth-input-area input:focus { outline: none; border-color: var(--gold); }
+    .auth-input-area button {
+      padding: 0.85rem 2rem;
+      background: var(--gold);
+      border: none;
+      border-radius: 2px;
+      color: var(--bg);
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .auth-result {
+      display: none;
+      padding: 1.5rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .auth-result.visible { display: block; animation: fadeUp 0.5s ease-out; }
+    .auth-verdict {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+    .auth-verdict.approved { color: var(--gold); }
+    .auth-verdict.denied { color: var(--rose); }
+    .auth-explanation { font-size: 0.85rem; color: var(--text-dim); line-height: 1.7; }
+
+    /* VIP Lounge */
+    .vip-content {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 3rem;
+      background: var(--surface);
+      border: 2px solid var(--gold);
+      border-radius: 4px;
+      text-align: center;
+    }
+    .vip-content h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .vip-content p {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .vip-perks {
+      list-style: none;
+      text-align: left;
+      padding: 1.5rem;
+      background: var(--bg);
+      border-radius: 4px;
+    }
+    .vip-perks li {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--cream);
+    }
+    .vip-perks li:last-child { border: none; }
+    .vip-perks li::before { content: '◆ '; color: var(--gold); }
+
+    /* Footer */
+    footer {
+      padding: 4rem 2rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .footer-tagline {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .footer-hours {
+      display: inline-grid;
+      grid-template-columns: auto auto;
+      gap: 0.25rem 2rem;
+      text-align: left;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      margin-bottom: 2rem;
+    }
+    .footer-hours dt { color: var(--cream); font-weight: 600; }
+    .footer-note {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .footer-real {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      opacity: 0.5;
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+    .footer-real a { color: var(--gold); text-decoration: none; }
+    .footer-real a:hover { text-decoration: underline; }
+
+    /* Reveal animation */
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Diamond rain */
+    .diamond-rain {
+      position: fixed; inset: 0; pointer-events: none; z-index: 99999;
+      overflow: hidden;
+    }
+    .diamond-rain span {
+      position: absolute;
+      top: -30px;
+      color: var(--gold);
+      font-size: 1.5rem;
+      animation: diamondFall linear forwards;
+      opacity: 0.8;
+    }
+    @keyframes diamondFall {
+      to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .rivalry-grid { grid-template-columns: 1fr; }
+      .rivalry-vs { padding-top: 0; }
+      .experts-grid { grid-template-columns: 1fr; }
+      .shop-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .shop-grid { grid-template-columns: 1fr; }
+      .guestbook-input-area { flex-direction: column; }
+      .auth-input-area { flex-direction: column; }
+      .ticket { padding: 2rem 1.5rem; }
+      .ticket-meta { flex-direction: column; gap: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Splash / Admission Ticket -->
+<div class="splash" id="splash">
+  <div class="ticket">
+    <div class="ticket-header">The Metropolitan Museum of Rock ◆ Est. 2024</div>
+    <h1>The Leah Mann Retrospective</h1>
+    <h2>A Permanent Exhibition of Extraordinary Brilliance</h2>
+    <p class="ticket-warning">This exhibition contains items of extraordinary brilliance. Sunglasses recommended. The Museum accepts no liability for sudden proposals, involuntary gasps, or the overwhelming desire to own something you cannot afford.</p>
+    <div class="ticket-meta">
+      <span>Admit One</span>
+      <span>Gallery Wing L.M.</span>
+      <span>All Hours</span>
+    </div>
+    <button class="admit-btn" id="enterBtn">Enter the Exhibition</button>
+    <div class="ticket-serial">No. 000001 ◆ NON-TRANSFERABLE ◆ PRICELESS</div>
+  </div>
+</div>
+
+<div class="gradient-bg"></div>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge">◆ Now Showing ◆ Permanent Collection ◆</div>
+  <h1 class="display hero-title" id="heroTitle">Leah Mann</h1>
+  <p class="hero-subtitle">Founder of Empire Rocks. Master of Bespoke Fine Jewellery. The woman who made Cape Town and Johannesburg fight over who deserves her more.</p>
+  <p class="hero-sub2">By appointment only. Obviously.</p>
+</section>
+
+<!-- Exhibition Overview -->
+<section class="stats-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="label">Curator's Notes</p>
+      <h2 class="display section-title">Exhibition Overview</h2>
+    </div>
+    <div class="curator-note reveal">
+      "In the annals of fine jewellery, there are those who make accessories, and there is Leah Mann. To place her work in the same category as ordinary jewellery would be like placing the Mona Lisa in the same category as a fridge magnet. She does not simply create pieces. She creates moments. Futures. The occasional tears."
+      <span class="curator-attrib">From the Curator's Introduction, Metropolitan Museum of Rock</span>
+    </div>
+    <div class="stats-grid reveal">
+      <div class="stat-card">
+        <div class="stat-number" data-target="15" data-suffix="+">0</div>
+        <div class="stat-label">Years Active</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" data-target="2847" data-suffix="">0</div>
+        <div class="stat-label">Pieces Created</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" data-target="9214" data-suffix="">0</div>
+        <div class="stat-label">Hearts Stopped</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" data-target="412" data-suffix="">0</div>
+        <div class="stat-label">Grown Adults Who Cried Upon Receiving a Custom Piece</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Origin Story -->
+<section>
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="label">Biography Panel</p>
+      <h2 class="display section-title">The Origin Story</h2>
+      <p class="section-desc">Before Empire Rocks, the jewellery world was in darkness. People were just... wearing things.</p>
+    </div>
+    <div class="timeline reveal">
+      <div class="timeline-item">
+        <div class="timeline-year">The Early Years</div>
+        <div class="timeline-text">Born in South Africa with an eye for the extraordinary. While other children collected stickers, young Leah was reportedly critiquing the cut quality of her grandmother's engagement ring. She was four. Her assessment was correct.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">The Awakening</div>
+        <div class="timeline-text">A pivotal moment that gemologists now refer to as "The Awakening." Leah realized that the world did not need more mass produced jewellery. It needed pieces that made people feel something. Something profound. Something that made proposals go viral.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">Empire Rocks is Founded</div>
+        <div class="timeline-text">Based in Cape Town with a presence in Johannesburg, Empire Rocks launched as a bespoke fine jewellery house. The name is a masterclass in understatement. Leah didn't just enter the industry. The industry rearranged itself around her.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">The Present Day</div>
+        <div class="timeline-text">Now operating by appointment only across two cities, Leah curates and creates fine jewellery using only the finest materials. Custom engagement rings, chains, charms, earrings, and bands. Each piece is a small act of genius. The waitlist is, at this point, more of a lifestyle.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- The Collection Gallery -->
+<section>
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="label">Gallery Wing L.M.</p>
+      <h2 class="display section-title">The Permanent Collection</h2>
+      <p class="section-desc">Selected works, presented with museum standard labels. Please do not touch the glass. (There is no glass. Please do not touch anything.)</p>
+    </div>
+    <div class="gallery-grid reveal">
+      <div class="gallery-piece">
+        <div class="piece-visual">✦</div>
+        <div class="piece-info">
+          <div class="piece-title">Untitled #47</div>
+          <div class="piece-medium">Rose Gold, Diamonds, Tears of Joy ◆ Custom Commission</div>
+          <div class="piece-desc">This piece was commissioned for an engagement. The recipient said yes before the ring was fully out of the box. Scientists are still studying the phenomenon. Current theory: the brilliance of the stone created a localized time distortion.</div>
+          <div class="piece-value">Estimated Emotional Value: Immeasurable</div>
+        </div>
+      </div>
+      <div class="gallery-piece">
+        <div class="piece-visual">◇</div>
+        <div class="piece-info">
+          <div class="piece-title">The Cape Town Sunrise</div>
+          <div class="piece-medium">18K Gold, Sapphire, Morning Light ◆ 2023</div>
+          <div class="piece-desc">Inspired by the view from Signal Hill at dawn. The sapphire was selected after Leah rejected 247 others for being "too ordinary." The 248th stone reportedly sighed with relief upon being chosen.</div>
+          <div class="piece-value">Estimated Emotional Value: Three standing ovations</div>
+        </div>
+      </div>
+      <div class="gallery-piece">
+        <div class="piece-visual">♦</div>
+        <div class="piece-info">
+          <div class="piece-title">Study in Permanence</div>
+          <div class="piece-medium">Platinum, Diamond, Commitment ◆ Custom Commission</div>
+          <div class="piece-desc">A wedding band that has been described by the wearer as "the only thing that has never let me down." The wearer was a divorce attorney. This piece converted her to family law.</div>
+          <div class="piece-value">Estimated Emotional Value: One career change</div>
+        </div>
+      </div>
+      <div class="gallery-piece">
+        <div class="piece-visual">★</div>
+        <div class="piece-info">
+          <div class="piece-title">Composition for Two Ears</div>
+          <div class="piece-medium">White Gold, Emerald, Perfect Symmetry ◆ 2024</div>
+          <div class="piece-desc">A pair of earrings so precisely crafted that a mathematics professor attempted to publish a paper on their symmetry. The journal rejected it, calling the earrings "too perfect to be academically interesting."</div>
+          <div class="piece-value">Estimated Emotional Value: One rejected academic paper</div>
+        </div>
+      </div>
+      <div class="gallery-piece">
+        <div class="piece-visual">◆</div>
+        <div class="piece-info">
+          <div class="piece-title">The Johannesburg Statement</div>
+          <div class="piece-medium">Rose Gold, Ruby, Audacity ◆ 2023</div>
+          <div class="piece-desc">A chain necklace that caused three strangers to stop the wearer on the street. One asked where it was from. One asked for Leah's number. One simply wept. All three reactions are considered appropriate.</div>
+          <div class="piece-value">Estimated Emotional Value: Three strangers, zero composure</div>
+        </div>
+      </div>
+      <div class="gallery-piece">
+        <div class="piece-visual">✧</div>
+        <div class="piece-info">
+          <div class="piece-title">Small Monument</div>
+          <div class="piece-medium">Gold, Diamond, Defiance of Expectations ◆ Custom Commission</div>
+          <div class="piece-desc">A charm bracelet. The client requested "something subtle." Leah created something that renders the word "subtle" meaningless. The client has since retired the word from their vocabulary entirely.</div>
+          <div class="piece-value">Estimated Emotional Value: One word, permanently retired</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- By Appointment Only -->
+<section>
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="label">Access Restricted</p>
+      <h2 class="display section-title">By Appointment Only</h2>
+      <p class="section-desc">Securing an audience with Leah Mann has been compared to gaining entry to the world's most exclusive society. Except the society has better jewellery.</p>
+    </div>
+    <div class="appointment-box reveal">
+      <h3>Application for Audience</h3>
+      <div class="form-field">
+        <label>Full Legal Name</label>
+        <input type="text" id="appName" placeholder="As it appears on your most impressive document">
+      </div>
+      <div class="form-field">
+        <label>Reason for Seeking an Audience</label>
+        <select id="appReason">
+          <option value="">Select your reason...</option>
+          <option value="engagement">I need an engagement ring (she said she'd say yes if the ring is good enough)</option>
+          <option value="gift">I want to purchase a gift (for someone who deserves perfection)</option>
+          <option value="self">I want to treat myself (I have earned this)</option>
+          <option value="curiosity">I simply need to witness genius in person</option>
+          <option value="crying">I heard the jewellery makes people cry and I want to verify</option>
+          <option value="geology">I am a geologist and I have professional questions about these rocks</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Please describe, in your own words, why you are worthy</label>
+        <textarea id="appWhy" placeholder="Take your time. This is important."></textarea>
+      </div>
+      <button class="submit-btn" id="submitApp">Submit Application</button>
+      <div class="progress-container" id="progressContainer">
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill"></div></div>
+        <div class="progress-text" id="progressText">Verifying identity...</div>
+      </div>
+      <div class="waitlist-result" id="waitlistResult">
+        <h4>Your application has been... WAITLISTED</h4>
+        <div class="waitlist-position">#4,847</div>
+        <p>Current estimated wait time: Indeterminate. Leah will reach out when the stars align. Please do not call us. We will not call you. But we might. Possibly. Wear something nice just in case.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Cape Town vs Johannesburg -->
+<section>
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="label">Ongoing Dispute</p>
+      <h2 class="display section-title">Cape Town vs Johannesburg</h2>
+      <p class="section-desc">Two cities. One Leah. An unresolvable conflict.</p>
+    </div>
+    <div class="rivalry-grid reveal">
+      <div class="city-card">
+        <div class="city-name">Cape Town</div>
+        <div class="city-stat" id="ctDays">58%</div>
+        <div class="city-stat-label">Of Leah's Time (Alleged)</div>
+        <div class="city-quote">"We have Table Mountain. We have the ocean. We have Leah Mann. Johannesburg has... traffic."</div>
+        <div class="city-quote-attrib">Concerned Capetonian, Table Mountain Appreciation Society</div>
+        <div class="city-quote" style="margin-top:1rem">"I moved to Cape Town specifically because I heard Leah was here more often. I have no regrets. I do have a stunning necklace."</div>
+        <div class="city-quote-attrib">Anonymous Relocator, formerly of Pretoria</div>
+      </div>
+      <div class="rivalry-vs">vs.</div>
+      <div class="city-card">
+        <div class="city-name">Johannesburg</div>
+        <div class="city-stat" id="jhbDays">42%</div>
+        <div class="city-stat-label">Of Leah's Time (Disputed)</div>
+        <div class="city-quote">"Cape Town thinks they own Leah Mann. They don't own Leah Mann. Nobody owns Leah Mann. But if someone did, it would be us."</div>
+        <div class="city-quote-attrib">Joburg Resident, speaking on condition of anonymity</div>
+        <div class="city-quote" style="margin-top:1rem">"I have formally petitioned the city council to offer Leah Mann additional incentives to spend more time in Johannesburg. The petition has 12,000 signatures."</div>
+        <div class="city-quote-attrib">Community Organiser, Sandton</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Expert Testimonials -->
+<section>
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="label">Expert Opinions</p>
+      <h2 class="display section-title">Testimonials</h2>
+    </div>
+    <div class="experts-grid reveal">
+      <div class="expert-card">
+        <div class="expert-quote">"I have curated exhibitions for thirty years. I have handled Faberge eggs. I have worn white gloves in the presence of crown jewels. And I can say, without hesitation, that Leah Mann's work belongs in every major collection on Earth. The fact that people get to wear it is, frankly, an outrageous privilege."</div>
+        <div class="expert-name">Dr. Helena Voss</div>
+        <div class="expert-title">Museum Curator, Emeritus</div>
+      </div>
+      <div class="expert-card">
+        <div class="expert-quote">"These aren't just rocks. I'm a geologist. I know rocks. I've spent my career studying rocks. These are... something else entirely. I showed one of her pieces to my colleagues and three of them changed fields. One became a jeweller. Two became her clients."</div>
+        <div class="expert-name">Prof. David Erasmus</div>
+        <div class="expert-title">Geologist, University of Cape Town</div>
+      </div>
+      <div class="expert-card">
+        <div class="expert-quote">"I've modelled for every jeweller in South Africa. My hands have appeared in 47 campaigns. I thought I'd seen it all. Then I put on an Empire Rocks ring and my hands... transcended. My agent called it 'the best my hands have ever looked.' I cried. My hands cried."</div>
+        <div class="expert-name">Nomvula Khumalo</div>
+        <div class="expert-title">Hand Model, 15 Years Experience</div>
+      </div>
+      <div class="expert-card">
+        <div class="expert-quote">"She made the ring. All I had to do was not drop it. I practiced holding small objects for three weeks. I held the box with both hands. I got down on one knee. The ring did the rest. My wife said yes before I finished the question. I credit Leah entirely."</div>
+        <div class="expert-name">Michael van der Berg</div>
+        <div class="expert-title">Boyfriend Who Had to Propose</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- The Gift Shop -->
+<section>
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="label">Retail Experience</p>
+      <h2 class="display section-title">The Museum Gift Shop</h2>
+      <p class="section-desc">Please browse responsibly. All sales are final. All prices are real. (They are not real.)</p>
+    </div>
+    <div class="shop-grid reveal">
+      <div class="shop-item">
+        <div class="shop-icon">◆</div>
+        <h5>Empire Rocks Tote Bag</h5>
+        <div class="shop-price">R82,500</div>
+        <div class="shop-desc">It touched a diamond once. The cotton has not been the same since.</div>
+        <button class="shop-btn" onclick="alert('This item is currently out of stock. It was never in stock.')">Add to Cart</button>
+      </div>
+      <div class="shop-item">
+        <div class="shop-icon">✦</div>
+        <h5>Exhibition Catalog</h5>
+        <div class="shop-price">R16,200</div>
+        <div class="shop-desc">Contains exactly one photo. You will understand when you see it.</div>
+        <button class="shop-btn" onclick="alert('The catalog is a limited edition of one. It belongs to Leah.')">Add to Cart</button>
+      </div>
+      <div class="shop-item">
+        <div class="shop-icon">★</div>
+        <h5>Commemorative T-Shirt</h5>
+        <div class="shop-price">R40,000</div>
+        <div class="shop-desc">"I Visited The Leah Mann Retrospective and All I Got Was This Emotional Experience"</div>
+        <button class="shop-btn" onclick="alert('The emotional experience cannot be contained by cotton.')">Add to Cart</button>
+      </div>
+      <div class="shop-item">
+        <div class="shop-icon">◇</div>
+        <h5>Museum Fridge Magnet</h5>
+        <div class="shop-price">R7,400</div>
+        <div class="shop-desc">A miniature replica of nothing. It simply says "Empire Rocks" in gold foil.</div>
+        <button class="shop-btn" onclick="alert('Your fridge is not worthy.')">Add to Cart</button>
+      </div>
+      <div class="shop-item">
+        <div class="shop-icon">♦</div>
+        <h5>Audio Guide</h5>
+        <div class="shop-price">R28,000</div>
+        <div class="shop-desc">90 minutes of a soothing voice saying "Look at this. Just look at it. Are you looking?"</div>
+        <button class="shop-btn" onclick="alert('The audio guide has been narrated by someone who wept during the recording. Three times.')">Add to Cart</button>
+      </div>
+      <div class="shop-item">
+        <div class="shop-icon">✧</div>
+        <h5>Postcard Set</h5>
+        <div class="shop-price">R12,600</div>
+        <div class="shop-desc">Six blank postcards. What could you possibly write that would be adequate?</div>
+        <button class="shop-btn" onclick="alert('Words fail. The postcards understand this.')">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Diamond Authentication Tool -->
+<section class="auth-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="label">Interactive Exhibit</p>
+      <h2 class="display section-title">Diamond Authentication Bureau</h2>
+      <p class="section-desc">Enter any word and our system will determine whether Leah Mann would approve of it as a gemstone name.</p>
+    </div>
+    <div class="auth-box reveal">
+      <div class="auth-input-area">
+        <input type="text" id="authInput" placeholder="Enter a word...">
+        <button id="authBtn">Authenticate</button>
+      </div>
+      <div class="auth-result" id="authResult">
+        <div class="auth-verdict" id="authVerdict"></div>
+        <div class="auth-explanation" id="authExplanation"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Guest Book -->
+<section>
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="label">Sign the Register</p>
+      <h2 class="display section-title">Museum Guest Book</h2>
+      <p class="section-desc">Leave your mark. Our system will generate an appropriate entry on your behalf.</p>
+    </div>
+    <div class="guestbook-box reveal">
+      <div class="guestbook-input-area">
+        <input type="text" id="guestName" placeholder="Your name">
+        <button id="guestSign">Sign the Guest Book</button>
+      </div>
+      <div class="guestbook-entries" id="guestEntries">
+        <div class="guestbook-entry">
+          <p>"I came expecting jewellery. I left understanding beauty. My Uber driver asked why I was crying. I could not explain."</p>
+          <span>Signed by: A Previous Visitor ◆ Exhibition Opening Day</span>
+        </div>
+        <div class="guestbook-entry">
+          <p>"Five stars. Would have given six but the rating system is, much like all things that are not Leah's jewellery, limited."</p>
+          <span>Signed by: A Reformed Critic ◆ Three Weeks Ago</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIP Lounge (hidden) -->
+<section class="vip-section" id="vipSection">
+  <div class="container">
+    <div class="vip-content">
+      <p class="label" style="margin-bottom:1rem">◆ Access Granted ◆</p>
+      <h3>The VIP Lounge</h3>
+      <p>You found it. Five clicks. That level of dedication is exactly the kind of energy Leah Mann respects. Welcome to the inner circle.</p>
+      <ul class="vip-perks">
+        <li>You have been moved from position #4,847 to position #4,846 on the waitlist</li>
+        <li>You may now refer to yourself as a "Friend of the Museum"</li>
+        <li>Your name has been whispered in the general direction of Cape Town</li>
+        <li>You are entitled to one (1) knowing nod from fellow VIP members</li>
+        <li>You may use the phrase "As someone who has been to the VIP Lounge" in conversation</li>
+        <li>Leah has not been informed of this lounge. It is entirely self-appointed.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p class="footer-logo">The Metropolitan Museum of Rock</p>
+    <p class="footer-tagline">This Exhibition is Permanent Because Legends Don't Do Limited Runs</p>
+    <dl class="footer-hours">
+      <dt>Monday to Friday</dt><dd>By Appointment Only</dd>
+      <dt>Saturday</dt><dd>By Appointment Only</dd>
+      <dt>Sunday</dt><dd>By Appointment Only</dd>
+      <dt>Public Holidays</dt><dd>Also By Appointment Only</dd>
+    </dl>
+    <p class="footer-note">"The only thing more exclusive than an Empire Rocks appointment is understanding why it needs to be."</p>
+    <p class="footer-real">This site is a tribute made with admiration. Leah Mann is the real deal.<br>
+      Visit <a href="https://empirerocks.com" target="_blank">empirerocks.com</a> ◆ Contact <a href="mailto:leah@empirerocks.com">leah@empirerocks.com</a><br>
+      Bespoke fine jewellery, by appointment in Cape Town and Johannesburg.</p>
+  </div>
+</footer>
+
+<!-- Diamond Rain Container -->
+<div class="diamond-rain" id="diamondRain"></div>
+
+<script>
+  // Console Easter Egg
+  console.log("%cLooking for the source code?", "font-size: 16px; font-weight: bold; color: #D4A853;");
+  console.log("%cLeah's craftsmanship can't be reverse-engineered.", "font-size: 12px; color: #a09882;");
+  console.log("%c◆ Empire Rocks ◆ empirerocks.com", "font-size: 11px; color: #c9a0a0;");
+
+  const $ = id => document.getElementById(id);
+
+  // Splash
+  $('enterBtn').onclick = () => {
+    $('splash').classList.add('hidden');
+  };
+
+  // Title click easter egg (5 clicks = VIP)
+  let titleClicks = 0;
+  $('heroTitle').onclick = () => {
+    titleClicks++;
+    if (titleClicks === 5) {
+      $('vipSection').classList.add('unlocked');
+      $('vipSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
+
+  // Konami code
+  const konamiSequence = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+  let konamiIndex = 0;
+  document.addEventListener('keydown', e => {
+    if (e.key === konamiSequence[konamiIndex]) {
+      konamiIndex++;
+      if (konamiIndex === konamiSequence.length) {
+        konamiIndex = 0;
+        triggerDiamondRain();
+      }
+    } else {
+      konamiIndex = 0;
+    }
+  });
+
+  function triggerDiamondRain() {
+    const container = $('diamondRain');
+    const symbols = ['◆', '◇', '♦', '✦', '✧', '★'];
+    for (let i = 0; i < 80; i++) {
+      const span = document.createElement('span');
+      span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+      span.style.left = Math.random() * 100 + 'vw';
+      span.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+      span.style.animationDelay = (Math.random() * 2) + 's';
+      span.style.fontSize = (Math.random() * 1.5 + 0.8) + 'rem';
+      container.appendChild(span);
+    }
+    setTimeout(() => { container.innerHTML = ''; }, 5000);
+  }
+
+  // Animated counters
+  function animateCounters() {
+    document.querySelectorAll('.stat-number').forEach(el => {
+      const target = parseInt(el.dataset.target);
+      const suffix = el.dataset.suffix || '';
+      const duration = 2000;
+      const start = performance.now();
+      function update(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.floor(eased * target).toLocaleString() + suffix;
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    });
+  }
+
+  // Appointment form
+  $('submitApp').onclick = () => {
+    const prog = $('progressContainer');
+    const fill = $('progressFill');
+    const text = $('progressText');
+    const result = $('waitlistResult');
+
+    prog.classList.add('visible');
+    result.classList.remove('visible');
+    fill.style.width = '0%';
+
+    const steps = [
+      [15, 'Verifying identity...'],
+      [35, 'Checking references...'],
+      [55, 'Consulting the stars...'],
+      [70, 'Assessing worthiness...'],
+      [85, 'Conferring with Leah (she is busy)...'],
+      [95, 'Almost there...'],
+      [100, 'Decision rendered.']
+    ];
+
+    steps.forEach(([pct, msg], i) => {
+      setTimeout(() => {
+        fill.style.width = pct + '%';
+        text.textContent = msg;
+        if (pct === 100) {
+          setTimeout(() => {
+            prog.classList.remove('visible');
+            result.classList.add('visible');
+          }, 600);
+        }
+      }, (i + 1) * 700);
+    });
+  };
+
+  // Diamond Authentication
+  const approved = ['aurora','velvet','celestine','ember','opal','sapphire','moonstone','twilight','solstice','diamond','ruby','pearl','garnet','topaz','amethyst','jade','crystal','shimmer','lumina','starlight','gold','platinum','silk','grace','luxe','bloom','nova','eden','bliss','haven','reign','rose','ivory','champagne','dusk','dawn','honey','saffron','marble','obsidian','onyx'];
+
+  $('authBtn').onclick = () => {
+    const word = $('authInput').value.trim().toLowerCase();
+    if (!word) return;
+    const resultEl = $('authResult');
+    const verdictEl = $('authVerdict');
+    const explEl = $('authExplanation');
+    resultEl.classList.add('visible');
+
+    const isApproved = approved.includes(word) || word.length > 6 && (word.endsWith('ine') || word.endsWith('ite') || word.endsWith('ia') || word.endsWith('yx'));
+
+    if (isApproved) {
+      verdictEl.className = 'auth-verdict approved';
+      const responses = [
+        `"${word.charAt(0).toUpperCase() + word.slice(1)}" has been APPROVED. Leah would nod approvingly. The stone would be set in rose gold.`,
+        `APPROVED. "${word.charAt(0).toUpperCase() + word.slice(1)}" carries the correct energy. Museum records have been updated.`,
+        `"${word.charAt(0).toUpperCase() + word.slice(1)}" is APPROVED. It sounds like something that belongs in a velvet case. Leah would agree.`
+      ];
+      verdictEl.textContent = '◆ APPROVED ◆';
+      explEl.textContent = responses[Math.floor(Math.random() * responses.length)];
+    } else {
+      verdictEl.className = 'auth-verdict denied';
+      const denials = [
+        `"${word.charAt(0).toUpperCase() + word.slice(1)}" has been DENIED. Leah looked at this word and felt nothing. A gemstone must evoke something.`,
+        `DENIED. "${word.charAt(0).toUpperCase() + word.slice(1)}" lacks the gravitas required. Consider adding more syllables and mystery.`,
+        `"${word.charAt(0).toUpperCase() + word.slice(1)}" is NOT APPROVED. Leah requires a gemstone name that makes people whisper. This makes people shrug.`,
+        `DENIED. "${word.charAt(0).toUpperCase() + word.slice(1)}" was tested on a focus group. The focus group was confused. Leah does not confuse people. She astounds them.`
+      ];
+      verdictEl.textContent = '✧ DENIED ✧';
+      explEl.textContent = denials[Math.floor(Math.random() * denials.length)];
+    }
+  };
+
+  $('authInput').addEventListener('keypress', e => { if (e.key === 'Enter') $('authBtn').click(); });
+
+  // Guest Book
+  const guestEntryTemplates = [
+    (name) => `"I thought I understood beauty. Then I saw Leah Mann's work. I now realize I have understood nothing for my entire life. Starting over." — ${name}`,
+    (name) => `"Came for the jewellery. Left with a new understanding of what it means to be alive. The gift shop was also excellent." — ${name}`,
+    (name) => `"I have visited every major museum on six continents. The Metropolitan Museum of Rock is the only one that made me reconsider my entire aesthetic worldview." — ${name}`,
+    (name) => `"My hands are trembling as I write this. Not from emotion (although there is emotion). I simply can't stop thinking about the rose gold." — ${name}`,
+    (name) => `"I brought my partner to this exhibition hoping it would hint that I want an Empire Rocks engagement ring. ${name} reporting that the hint was received." — ${name}`,
+    (name) => `"Extraordinary. Magnificent. I have run out of adjectives. Leah Mann has broken the English language for me." — ${name}`,
+    (name) => `"I was a skeptic. I thought 'it's just jewellery.' I was wrong. So profoundly wrong. I owe Leah Mann an apology and possibly my life savings." — ${name}`,
+    (name) => `"This exhibition changed me. I walked in as one person and walked out as someone who now understands the meaning of the word 'bespoke.'" — ${name}`,
+    (name) => `"I have never cried in a museum before. I have now cried in a museum. Thank you, Leah. Thank you." — ${name}`,
+    (name) => `"I tried to describe this experience to my mother. She said 'just show me.' I said 'you have to be there.' She booked a flight to Cape Town." — ${name}`
+  ];
+
+  $('guestSign').onclick = () => {
+    const name = $('guestName').value.trim() || 'Anonymous Visitor';
+    const template = guestEntryTemplates[Math.floor(Math.random() * guestEntryTemplates.length)];
+    const entry = document.createElement('div');
+    entry.className = 'guestbook-entry';
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-ZA', { year: 'numeric', month: 'long', day: 'numeric' });
+    entry.innerHTML = `<p>${template(name)}</p><span>Signed by: ${name} ◆ ${dateStr}</span>`;
+    $('guestEntries').prepend(entry);
+    $('guestName').value = '';
+  };
+
+  $('guestName').addEventListener('keypress', e => { if (e.key === 'Enter') $('guestSign').click(); });
+
+  // Scroll reveals
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // Trigger counters when stats section is visible
+        if (entry.target.closest('.stats-section')) animateCounters();
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
