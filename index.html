@@ -1313,6 +1313,7 @@
   $('heroTitle').onclick = () => {
     titleClicks++;
     if (titleClicks === 5) {
+      if(window.trackEvent)trackEvent('easter_egg_vip_unlock');
       $('vipSection').classList.add('unlocked');
       $('vipSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
@@ -1326,6 +1327,7 @@
       konamiIndex++;
       if (konamiIndex === konamiSequence.length) {
         konamiIndex = 0;
+        if(window.trackEvent)trackEvent('easter_egg_konami');
         triggerDiamondRain();
       }
     } else {
@@ -1478,5 +1480,6 @@
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 
+<script src="http://100.92.103.44:3847/tracker.js" data-site="leah-mann-museum"></script>
 </body>
 </html>
